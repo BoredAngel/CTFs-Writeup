@@ -1,0 +1,89 @@
+# =========================
+# Generic build artifacts
+# =========================
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+*.out
+*.class
+*.o
+*.obj
+*.so
+*.dll
+*.exe
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.stackdump
+
+# =========================
+# Node.js
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# =========================
+# Python
+# =========================
+venv/
+.env/
+.venv/
+ENV/
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# =========================
+# Compiled output
+# =========================
+dist/
+build/
+out/
+target/
+*.egg-info/
+.eggs/
+
+# =========================
+# Editors & OS files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.code-workspace
+
+# =========================
+# Archives
+# =========================
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# =========================
+# Coverage / test
+# =========================
+coverage/
+.coverage
+*.lcov
+*.gcda
+*.gcno
+*.gcov
+htmlcov/
+
+# =========================
+# Keep writeups safe
+# =========================
+# But don’t ignore markdown and text files (your actual writeups)
+!*.md
+!*.txt
