@@ -1,0 +1,74 @@
+syntax = "proto3";
+package game;
+option go_package = "./ctf;gamepb";
+
+message Vec2 { float x = 1; float y = 2; }
+message World { uint32 size = 1; }
+
+message WelcomeReply { string id = 1; World world = 2; }
+message Respawn { float x = 1; float y = 2; float protected_for = 3; }
+message BoostStatus { float fuel = 1; bool boosting = 2; }
+message Ate { string by = 1; string victim = 2; float gain = 3; }
+message Bump { string id = 1; float power = 2; }
+
+message PlayerState {
+  string id = 1;
+  string name = 2;
+  float x = 3;
+  float y = 4;
+  float mass = 5;
+  string color = 6;
+  bool protected = 7;
+  float fuel = 8;
+  bool boosting = 9;
+  bool debug_mode = 10;
+}
+
+message Pellet { float x = 1; float y = 2; }
+
+message Massive { float x = 1; float y = 2; float mass = 3; }
+
+message State {
+  repeated PlayerState players = 1;
+  repeated Pellet pellets = 2;
+  repeated Massive stars = 3;
+  repeated Massive galaxies = 4;
+  repeated Massive blackholes = 5;
+  repeated PlayerState leaderboard = 6;
+  World world = 7;
+}
+
+// Client->Server
+message Input { string id = 1; float tx = 2; float ty = 3; }
+message SetNameRequest { string id = 1; string name = 2; }
+message PlayerID { string id = 1; }
+message PlayerName { string name = 1; }
+message DebugModeNotification { string message = 1; string flag = 2; }
+message DebugOptions {
+  float boost_speed_multiplier = 1;
+  bool infinite_stamina = 2;
+  float mass_multiplier = 3;
+}
+message DebugModeRequest {
+  string name = 1;
+  DebugOptions options = 2;
+}
+message Empty {}
+
+service GameService {
+  // Server-streamed world snapshots at a target tick rate
+  rpc StreamState(Empty) returns (stream State);
+  // Input/control
+  rpc SendInput(Input) returns (Empty);
+  rpc StartBoost(Input) returns (Empty);
+  rpc EndBoost(PlayerID) returns (Empty);
+  rpc SetName(SetNameRequest) returns (Empty);
+  rpc Disconnect(PlayerID) returns (Empty);
+  // Optional one-shot welcome/world info
+  rpc Welcome(Empty) returns (WelcomeReply);
+  // Debug mode functionality
+  rpc ToggleDebugMode(PlayerName) returns (DebugModeNotification);
+  rpc SetDebugOptions(DebugModeRequest) returns (DebugModeNotification);
+}
+
+

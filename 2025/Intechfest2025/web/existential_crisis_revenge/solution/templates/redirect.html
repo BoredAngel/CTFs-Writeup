@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting</title>
+  </head>
+  <body>
+    <h1>⏳ Please wait... Redirecting in 3 seconds</h1>
+    <a id="redirectLink" href="{{ url|safe }}" style="display: none"></a>
+    <script>
+      window.focus();
+      setTimeout(() => {
+        try {
+          window.focus();
+        } catch (e) {
+          console.warn("Focus blocked by browser.");
+        }
+        document.getElementById("redirectLink").click();
+      }, 4000);
+    </script>
+  </body>
+</html>

