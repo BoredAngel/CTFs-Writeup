@@ -18,7 +18,7 @@ Flag: GEMASTIK18{g0d\_m0d3\_4ct1v4t3d\_1nf1n1t3\_p0w3r}
 
 ## Description
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
 
 There's more but I'll just put the important ones at [#overview](web-agar-agar.md#overview "mention")
 
@@ -46,11 +46,11 @@ Hint:
 
 We are given a web game like agar.io where we can play the game as normal. There is boost, we can rename and we can change our character picture to an image of our choosing with an URL pointing to the image we want.
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 The Important part is the details of the web game from the challenge description. There are many details but to summarize it,&#x20;
 
-<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 the web game consist of three parts
 
@@ -62,7 +62,7 @@ the web game consist of three parts
 
 From the Challenge description we also get some of the Traefik configuration
 
-<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
 The important thing is that the Dashboard is accessible at <mark style="color:blue;">https://traefik.gemas.tik</mark>&#x20;
 
