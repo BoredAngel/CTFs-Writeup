@@ -5,6 +5,7 @@
 ## Writeups
 
 * [Writeup Template](writeups/writeup-template.md)
+* [Useful Links](writeups/useful-links.md)
 * [Compfest 17](writeups/compfest-17/README.md)
   * [\[Web\] (not) Simple Web](writeups/compfest-17/web-not-simple-web.md)
   * [\[Web\] Basssh](writeups/compfest-17/web-basssh.md)
