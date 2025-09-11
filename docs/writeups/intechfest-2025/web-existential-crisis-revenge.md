@@ -388,25 +388,46 @@ But how to bruteforce it?&#x20;
 
 To login, we need to do it from an internal IP, that is, the bot must be the one who login. But then how to know if the login successful or not? We cannot directly read the bot fetch nor window.open result because of Same-Origin-Policy (SOP) which stops us from reading cross-site fetches. The bot can''t read it either as the bot and the login server uses different port and considered different origin.
 
-The answer is another XS Leaks Technique using error based events. As we only need to know yes or no
+The answer is another XS Leaks Technique using error based events. We can use resource loading pointing to the login api and use onload or onerror to see failure or success of the login.&#x20;
+
+It has some caveat though, the onload function will only trigger when both of the following condition si true,
+
+1. The resource exist; returns a 200 OK status
+2. The content-type matches:
+   1. \<img>        ->   image/\*
+   2. \<script>    ->    application/javascript  (json counts)
+   3. \<object>   ->    text/html
+
+Looking again at the code, we see that the login api returns a successful login with a 200 OK status and returns a text/html. We can exfiltrate the password!.
+
+We make another endpoint in our attacker website that has an object tag with the data attribute pointing to `http://localhost:1336/api/login?username=rgtxy&password=replicanx{guess}`. And make the onload function fetches to another of our hit endpoint to see the password.
+
+\[solver code]
+
+
+
+We then just make the bot go to our attacker website and we're done! we get the password &#x20;
+
+### Part 3 - Getting the FLAGGGGG
+
+We now have the username and password. To get the flag, we just need to go to the dashboard with a cookie that bruhhhh
 
 
 
 
 
+## Afterthought&#x20;
 
+As I mentioned before, I got the solver for the v1 version of the challenge from a previous competition I were in. The solver definitely helps a lot at solving this challenge because literaly half of the challenge was already completed.
 
-
-
-
-
-
-
-## Afterthought \[OPTIONAL]
-
-just your thoughts or comments on the challenge it self
+But again, I learned many new things and techniques that I want to make a writeup to solidify those knowledge. Hopefully next time, I can solve another hard question all by myself.
 
 ## Links
 
-* POC : github link
-* references that might be helpful
+Source Code & solver
+
+
+
+References
+
+{% embed url="https://cheatsheetseries.owasp.org/cheatsheets/XS_Leaks_Cheat_Sheet.html#attacks-based-on-error-events" %}
