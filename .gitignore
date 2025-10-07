@@ -43,7 +43,6 @@ pip-delete-this-directory.txt
 # =========================
 # Compiled output
 # =========================
-dist/
 build/
 out/
 target/
@@ -59,16 +58,6 @@ desktop.ini
 .idea/
 .vscode/
 *.code-workspace
-
-# =========================
-# Archives
-# =========================
-*.zip
-*.tar
-*.tar.gz
-*.tgz
-*.rar
-*.7z
 
 # =========================
 # Coverage / test
