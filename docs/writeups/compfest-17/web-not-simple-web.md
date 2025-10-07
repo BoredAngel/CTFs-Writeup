@@ -92,7 +92,7 @@ Oh my god, It took me so long to solve this because I didn't immediately check f
 
 Source Code:
 
-
+{% embed url="https://github.com/BoredAngel/CTFs-Writeup/tree/main/2025/Compfest-17/web/not_simple_web" %}
 
 References:
 

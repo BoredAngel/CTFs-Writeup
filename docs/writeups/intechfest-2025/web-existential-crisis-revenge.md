@@ -378,13 +378,13 @@ I didn't see this at first but it turns out that the only valid character was ju
 
 This part is relatively simpler than the previous part. We know that the password starts with <mark style="color:$warning;">`replicanx`</mark>. And although we need to know the whole password to know the flag, we don't really need the whole password to login.&#x20;
 
-<figure><img src="broken-reference" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (18).png" alt=""><figcaption></figcaption></figure>
 
 As we see here, to login we only need a substring of the password to login. With this guessing the password become exponentially feasible. before we must bruteforce 16^6 ≈ 16 million times but with this we only need to do it 16\*6 = 256 times. A very feasible number to bruteforce.&#x20;
 
 But how to bruteforce it?&#x20;
 
-<figure><img src="broken-reference" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (20).png" alt=""><figcaption></figcaption></figure>
 
 To login, we need to do it from an internal IP, that is, the bot must be the one who login. But then how to know if the login successful or not? We cannot directly read the bot fetch nor window.open result because of Same-Origin-Policy (SOP) which stops us from reading cross-site fetches. The bot can''t read it either as the bot and the login server uses different port and considered different origin.
 
@@ -398,21 +398,21 @@ It has some caveat though, the onload function will only trigger when both of th
    2. \<script>    ->    application/javascript  (json counts)
    3. \<object>   ->    text/html
 
-Looking again at the code, we see that the login api returns a successful login with a 200 OK status and returns a text/html. We can exfiltrate the password!.
+Looking again at the code, we see that the login api allows a GET for login and returns a successful login with a 200 OK status and returns a text/html. We can exfiltrate the password!.
 
 We make another endpoint in our attacker website that has an object tag with the data attribute pointing to `http://localhost:1336/api/login?username=rgtxy&password=replicanx{guess}`. And make the onload function fetches to another of our hit endpoint to see the password.
 
-\[solver code]
+<figure><img src="../../.gitbook/assets/image (22).png" alt=""><figcaption></figcaption></figure>
 
-
+<figure><img src="../../.gitbook/assets/image (23).png" alt=""><figcaption></figcaption></figure>
 
 We then just make the bot go to our attacker website and we're done! we get the password &#x20;
 
 ### Part 3 - Getting the FLAGGGGG
 
-We now have the username and password. To get the flag, we just need to go to the dashboard with a cookie that bruhhhh
+We now have the username and password. To get the flag, we just need to go to the dashboard with a cookie called 'username' with the value of the username we found and another cookie called 'auth' with the value the password we found.&#x20;
 
-
+With that, we can access the dashboard and get the flag.
 
 
 
@@ -426,7 +426,7 @@ But again, I learned many new things and techniques that I want to make a writeu
 
 Source Code & solver
 
-
+{% embed url="https://github.com/BoredAngel/CTFs-Writeup/tree/main/2025/Intechfest2025/web/existential_crisis_revenge" %}
 
 References
 

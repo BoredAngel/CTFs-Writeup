@@ -13,3 +13,5 @@
   * [\[Web\] Agar-Agar](writeups/gemastik-2025/web-agar-agar.md)
 * [InTechFest 2025](writeups/intechfest-2025/README.md)
   * [\[Web\] Existential Crisis Revenge](writeups/intechfest-2025/web-existential-crisis-revenge.md)
+* [WreckIT 2025](writeups/wreckit-2025/README.md)
+  * [\[Web\] Safe Note](writeups/wreckit-2025/web-safe-note.md)
