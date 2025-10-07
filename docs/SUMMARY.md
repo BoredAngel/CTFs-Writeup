@@ -15,3 +15,5 @@
   * [\[Web\] Existential Crisis Revenge](writeups/intechfest-2025/web-existential-crisis-revenge.md)
 * [WreckIT 2025](writeups/wreckit-2025/README.md)
   * [\[Web\] Safe Note](writeups/wreckit-2025/web-safe-note.md)
+  * [\[Web\] Safe Social](writeups/wreckit-2025/web-safe-social.md)
+  * [\[Web\] Safe Template](writeups/wreckit-2025/web-safe-template.md)

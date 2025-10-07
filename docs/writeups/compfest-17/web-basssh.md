@@ -20,7 +20,7 @@ I didn't save it lmao. Next time I'll do better, I swear
 
 So we have this website made with bash that gives a CLI like interface where we can pick a python file from the three files that were given. The selected python files can then be executed with our input.&#x20;
 
-<figure><img src="../../.gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (11) (1).png" alt=""><figcaption></figcaption></figure>
 
 The Interesting part here is when selecting a file it's just adding an argument to the current page&#x20;
 
@@ -30,15 +30,15 @@ The Interesting part here is when selecting a file it's just adding an argument 
 
 Looking at the following source code,
 
-<figure><img src="../../.gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (13) (1).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (14) (1).png" alt=""><figcaption></figcaption></figure>
 
 We can see that the filename argument is being passed to the _<mark style="color:$success;">urldecode</mark>_ command which is a custom command that just do what the command name suggest.&#x20;
 
 After that, the input is then passed to the _<mark style="color:$success;">basename</mark>_ command and passed again to be read with _<mark style="color:$success;">cat</mark>_ and is then get showed to the client
 
-<figure><img src="../../.gitbook/assets/image (15).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (15) (1).png" alt=""><figcaption></figcaption></figure>
 
 From this Dockerfile, we can see that the flag resides in /flag.txt\
 so we must find a way to read there or find an RCE.
@@ -51,7 +51,7 @@ The most important part of the code is the file reading of any input from the us
 
 The key is that we can do a <mark style="color:$warning;">parameter injection</mark> in the filename input. We can leverage that to our advantage. See the manual for _<mark style="color:$success;">basename</mark>_,
 
-<figure><img src="../../.gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (16) (1).png" alt=""><figcaption></figcaption></figure>
 
 From the manual, We can see the parameter <mark style="color:$success;">-z</mark> and <mark style="color:$success;">-a</mark>. Those two parameter are the key to solving this challenge.
 
@@ -80,7 +80,7 @@ payload:
 
 With this we gain the ability for path traversal and we obtain the flag
 
-<figure><img src="../../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (9) (1).png" alt=""><figcaption></figcaption></figure>
 
 ## Afterthought
 

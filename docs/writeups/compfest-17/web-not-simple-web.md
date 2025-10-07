@@ -24,24 +24,24 @@ In this challenge we are given a website and a proxy server. The website is not 
 
 Not really much to look at in the website itself:
 
-<figure><img src="../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
 
 There's only one other endpoint and it's <mark style="color:$success;">/secret.html</mark> but we can't reach it due to the proxy.
 
 The Proxy itself is a custom proxy that the author of the challenge made.  Here's a small snippet of it:
 
-<figure><img src="../../.gitbook/assets/image (6).png" alt=""><figcaption><p>You can check the whole code in my github repo (link below)</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (6) (1).png" alt=""><figcaption><p>You can check the whole code in my github repo (link below)</p></figcaption></figure>
 
 The proxy itself is a pretty simple proxy made with python that receive request and send it to the internal server, receive the answer from the internal server and then send it back to the client.
 
 Looking at the web server itself, it is made with rust using the hyper library. The important thing is this part of the code:
 
-<figure><img src="../../.gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (7) (1).png" alt=""><figcaption></figcaption></figure>
 
 So to get the flag, we really just need to make a HTTP request to /secret.html\
 Unfortunately, it is being filtered by the proxy so any request to there will be rejected.
 
-<figure><img src="../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
 
 I'm not sure if I am just skill issue-ed but I don't think we can bypass this
 
@@ -51,7 +51,7 @@ Although It took me so long to solve this (cuz im a dummy), the solution is very
 
 We first take a look at the library being used. while the proxy python server seems to be using latest version, the same thing cannot be said for the Rust web server:
 
-<figure><img src="../../.gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (8) (1).png" alt=""><figcaption></figcaption></figure>
 
 Searching up "Rust hyper 0.14.9 CVE" we can find [CVE-2021-32714](https://www.cvedetails.com/cve/CVE-2021-32714/), where it's possible for an Integer overflow to happen when decoding chunk from a request that uses the "Tranfer-Encoding: chunked" header. This vulnerability can leads to a request smuggling attack where we send two request concealed as one request.&#x20;
 

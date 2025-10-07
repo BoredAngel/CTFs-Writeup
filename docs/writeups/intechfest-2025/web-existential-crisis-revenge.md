@@ -280,11 +280,11 @@ The idea to bypass this is by going to non-internal website, makes the tab a ver
 
 The way to do this is to make the <mark style="color:$success;">verifyVerifiedTab</mark> function suspended for a long enough time for us to redirect to the internal address.&#x20;
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
 
 The function checks the tab by fetching to a <mark style="color:$success;">/verify</mark> endpoint of the current tab URL. The interesting part is <mark style="color:$success;">await</mark> and <mark style="color:$success;">fetch</mark> doesn't have an internal timeout mechanism. It will suspend indefinitely until either the connection is broken or the server response.
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 So we can make the bot goes to our website, it will try to verify the current  tab. it fetches to our <mark style="color:$success;">/verify</mark> endpoint and it will wait for a long long time. This way we'll bypass this extension as long as we're using the same tab.
 
