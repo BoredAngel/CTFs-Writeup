@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  backend:
+    build: ./backend
+    ports: ["10003:10003"]
+    environment:
+      - FLASK_ENV=production
+    container_name: backend
+
+  frontend:
+    build: ./frontend
+    ports: ["5173:5173"]
+    depends_on: [backend]
+    container_name: frontend
+
+  bot:
+    build: ./bot
+    depends_on: [backend, frontend]
+    environment:
+      - API_BASE=http://backend:10003
+      - FRONTEND_BASE=http://frontend:5173
+      - CHROMIUM_PATH=/usr/bin/chromium
+    container_name: bot
+
+volumes:
+  db_data:

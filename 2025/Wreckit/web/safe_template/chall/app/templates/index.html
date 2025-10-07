@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ululala</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Ululala</h1>
+
+    <div class="text-center">
+      <img src="https://i.kym-cdn.com/photos/images/original/001/390/603/947.png"
+           alt="no-cat-allowed" style="max-width: 300px;">
+    </div>
+
+    <div id="result" class="text-center my-4">
+      <h1 id="resultText"></h1>
+    </div>
+
+    <div id="mydiv" class="text-center">
+      <form id="myForm">
+        <div class="form-group">
+          <label for="inputstring">Input:</label>
+          <input type="text" id="inputstring" name="inputstring" class="form-control" autocomplete="off">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('myForm');
+    const resultH1 = document.getElementById('resultText');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const formData = new FormData(form); 
+
+      try {
+        const resp = await fetch('/', { method: 'POST', body: formData });
+        const text = await resp.text();
+
+        if (!resp.ok) {
+          resultH1.textContent = text || 'Not allowed.';
+          return;
+        }
+        resultH1.innerHTML = text; 
+      } catch (e) {
+        console.error(e);
+        resultH1.textContent = 'Error submitting form.';
+      }
+    });
+  </script>
+</body>
+</html>

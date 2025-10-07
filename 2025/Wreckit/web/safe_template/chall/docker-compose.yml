@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  ssti_web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ssti_challenge:latest
+    ports:
+      - "10103:10103"                  
+    restart: unless-stopped            
+    environment:
+      - PYTHONUNBUFFERED=1
+    user: "65534:65534"                
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:10103/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M

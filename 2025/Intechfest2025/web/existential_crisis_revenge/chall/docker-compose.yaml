@@ -1,0 +1,69 @@
+version: "3.9"
+
+x-deploy-priority: &deploy_priority
+  restart_policy:
+    condition: on-failure
+  resources:
+    limits:
+      cpus: "2.0"
+      memory: 4G
+    reservations:
+      cpus: "2.0"
+      memory: 3G
+  update_config:
+    parallelism: 1
+    order: start-first
+
+x-deploy-common: &deploy_common
+  restart_policy:
+    condition: on-failure
+  resources:
+    limits:
+      cpus: "1.0" 
+      memory: 256M
+    reservations:
+      cpus: "0.50"
+      memory: 128M
+  update_config:
+    parallelism: 1
+    order: start-first
+
+services:
+  web-existential-bot:
+    container_name: web-existential-crisis-bot
+    deploy: *deploy_priority
+    ports:
+      - 1337:1337
+    build:
+      context: .
+      dockerfile: .docker/bot/Dockerfile
+
+    environment:
+      USERNAME: repganteng
+      DISPLAY: ${DISPLAY}
+
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+
+    networks:
+      - existential-crisis
+    restart: always
+    security_opt:
+      - seccomp:unconfined
+
+  web-existential-app:
+    container_name: web-existential-crisis-app
+    deploy: *deploy_common
+    ports:
+      - 1336:1336
+    build:
+      context: .
+      dockerfile: .docker/web/Dockerfile
+    environment:
+      - USERNAME=repganteng
+      - FLAG2=INTECHFEST{repgantengbanget}
+    networks:
+      - existential-crisis
+
+networks:
+  existential-crisis:

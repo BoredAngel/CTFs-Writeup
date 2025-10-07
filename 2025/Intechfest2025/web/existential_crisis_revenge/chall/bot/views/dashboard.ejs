@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Persona Dashboard</title>
+    <link href="/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+    <style>
+      body {
+        min-height: 100vh;
+        overflow-y: auto;
+      }
+      .audio-player {
+        position: absolute;
+        bottom: 1rem;
+        left: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 1rem;
+        border: 2px solid #ff0000;
+        border-radius: 0;
+      }
+      .audio-player label {
+        font-size: 0.9rem;
+        color: white;
+      }
+      .persona-title span {
+        display: inline-block;
+        padding: 0.25rem;
+        margin: 0 1px;
+        border: 2px solid #ff0000;
+        background: #000;
+        text-shadow: none;
+      }
+    </style>
+  </head>
+  <body class="bg-dark text-white persona-bg">
+    <div class="text-center">
+      <h1 id="personaTitle" class="persona-title mb-4"></h1>
+      <h3 style="display: none;" id="username"><%= username %></h3>
+      <h3 class="text-danger">README.md</h3>
+      <div class="border border-danger p-3 bg-black rounded">
+        <code>
+          <%- data %>
+        </code>
+      </div>
+    </div>
+    <div class="audio-player">
+      <label>🎵 Persona OST</label>
+      <audio id="personaOst" src="/p5-mus.mp3" loop controls autoplay></audio>
+    </div>
+
+    <script src="dashboard.js"></script>
+  </body>
+</html>
