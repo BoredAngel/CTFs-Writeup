@@ -15,7 +15,7 @@ Flag: WRECKIT60{s1mple\_xss\_since\_im\_not-really\_good\_at\_doing\_web}
 
 ## Description
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
 
 ## Overview
 
